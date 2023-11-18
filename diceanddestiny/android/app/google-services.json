@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "719600442713",
+    "project_id": "dicendestiny-c20c7",
+    "storage_bucket": "dicendestiny-c20c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719600442713:android:b3cccde5282182424b4048",
+        "android_client_info": {
+          "package_name": "com.example.diceanddestiny"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ1hzopffSod3tp0pynr_mEDBQs_Jt2-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
