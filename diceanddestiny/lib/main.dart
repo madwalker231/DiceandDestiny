@@ -1,9 +1,10 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faker/faker.dart';
-import 'firebase_options.dart'; 
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Dice and Destiny',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(98, 58, 107, 148)),
         useMaterial3: true,
@@ -41,28 +42,47 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  String? _generatedName; // Variable to store generated name
 
   void _submitData() async {
     final username = _usernameController.text;
     final password = _passwordController.text;
 
-    // Add code to send data to Firebase
-    await FirebaseFirestore.instance.collection('user').add({
-      'username': username,
-      'password': password,
-    });
+    if (username.isEmpty || password.isEmpty) {
+      // Show error message if username or password is empty
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Please enter both username and password.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Add code to send data to Firebase
+      await FirebaseFirestore.instance.collection('user').add({
+        'username': username,
+        'password': password,
+      });
 
-    // Clear text fields after submission
-    _usernameController.clear();
-    _passwordController.clear();
-  }
+      // Clear text fields after submission
+      _usernameController.clear();
+      _passwordController.clear();
 
-  String _generateRandomName() {
-    final faker = Faker(); // Initialize Faker
-
-    // Generate a random name using the faker package
-    return faker.person.firstName();
+      // Navigate to Game Master and Player selection screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const GamePlayerSelectionScreen()),
+      );
+    }
   }
 
   @override
@@ -91,28 +111,98 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: _submitData,
               child: const Text('Submit'),
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                final randomName = _generateRandomName();
-                setState(() {
-                  _generatedName = randomName; // Set the generated name
-                });
-                if (kDebugMode) {
-                  print('Random Name: $randomName');
-                }
-              },
-              child: const Text('Generate Random Name'),
-            ),
-            if (_generatedName != null) // Show generated name if available
-              const SizedBox(height: 16),
-              Text(
-                'Generated Name: $_generatedName',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
           ],
         ),
       ),
     );
   }
-} 
+}
+
+class GamePlayerSelectionScreen extends StatelessWidget {
+  const GamePlayerSelectionScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Select Role'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MenuScreen(role: 'Game Master')),
+                );
+              },
+              child: const Text('Game Master'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MenuScreen(role: 'Player')),
+                );
+              },
+              child: const Text('Player'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MenuScreen extends StatelessWidget {
+  final String role;
+
+  const MenuScreen({Key? key, required this.role}) : super(key: key);
+
+  String _generateRandomName() {
+    final faker = Faker();
+    return faker.person.firstName();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('$role Menu'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                final randomName = _generateRandomName();
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Generated Name'),
+                      content: Text('Random Name: $randomName'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text('Generate Random Name'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
