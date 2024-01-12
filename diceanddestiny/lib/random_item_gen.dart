@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'dart:math';
 
 class RandomItemGenerator {
@@ -10,30 +12,38 @@ class RandomItemGenerator {
       max = min;
       min = 0;
     }
-    return randomf(min, max).floor();
+    return randomInt(min, max).floor();
   }
 
   double randomf([double min = 0, double max = 1]) {
     return Random().nextDouble() * (max - min) + min;
   }
 
-  List<T> shuffle<T>(List<T> target) {
-    for (int i = 0; i < 5; i++) {
-      target.sort((_) => random() > 0 ? 1 : -1);
+  int randomInt(int min, int max) {
+    return Random().nextInt(max - min + 1) + min;
+  }
+
+  List<T> shuffle<T>(List<T> target) 
+  {
+    for (int i = 0; i < 5; i++) 
+    {
+      target.sort((a, b) => random() > 0 ? 1 : -1);
     }
     return target;
   }
 
-  List<T> sample<T>(List<T> target, [int amount = 1]) {
+  List<T> sample<T>(List<T> target, [int amount = 1]) 
+  {
     List<T> dummy = List.from(target);
     if (dummy.length <= amount) return dummy;
-    shuffle(dummy);
-    List<T> sample = [];
-    while (sample.length < amount) {
-      sample.add(dummy.removeAt(0));
+      shuffle(dummy);
+      List<T> sampleList = [];
+    while (sampleList.length < amount) 
+    {
+      sampleList.add(dummy.removeAt(0));
     }
-    return amount == 1 ? sample[0] : sample;
-  }
+    return amount == 1 ? [sampleList[0]] : sampleList;
+  } 
 }
 
 class Item {
@@ -46,49 +56,49 @@ class Item {
   late String? name;
   late String? slot;
 
-  void randomize() {
-    RandomItemGenerator randomItemGenerator = RandomItemGenerator();
+  void randomize(Map<String, dynamic> db) {
+  RandomItemGenerator randomItemGenerator = RandomItemGenerator();
 
-    level = randomItemGenerator.random(1, 101);
-    slot = randomItemGenerator.sample(db['slots']);
-    name = randomItemGenerator.sample(db['names'][slot]);
-    attributes = [];
+  level = randomItemGenerator.random(1, 101);
+  slot = randomItemGenerator.sample(db['slots']) as String?;
+  name = randomItemGenerator.sample(db['names'][slot!]!) as String?;
+  attributes = [];
 
-    if (level < 10) {
-      quality = db['qualities'][0];
-    } else {
-      quality = randomItemGenerator.sample(db['qualities']);
-      List<String> attributeList = randomItemGenerator.sample(
-          db['attributes'], quality['attributes']);
-      attributeList.forEach((attribute) {
-        attributes.add({
-          'name': attribute,
-          'value': (level * randomItemGenerator.random(1, 5) * quality['factor'])
-              .ceil(),
-        });
+  if (level < 10) {
+    quality = db['qualities'][0];
+  } else {
+    quality = randomItemGenerator.sample(db['qualities']) as Map<String, int>;
+    List<String> attributeList = randomItemGenerator.sample(
+        db['attributes'], quality['attributes'] as int);
+    for (var attribute in attributeList) {
+      attributes.add({
+        'name': attribute,
+        'value': (level * randomItemGenerator.random(1, 5) * quality['factor']! as double)
+            .ceil(),
       });
     }
-
-    if (quality['name'] != 'normal') {
-      prefix = randomItemGenerator.sample(db['prefixes']);
-    } else {
-      prefix = null;
-    }
-
-    if (quality['name'] == 'epic') {
-      suffix = randomItemGenerator.sample(db['suffixes']);
-    } else {
-      suffix = null;
-    }
-
-    defense =
-        (level * randomItemGenerator.random(5, 10) * quality['factor']).ceil();
   }
+
+  if (quality['name'] != 'normal') {
+    prefix = randomItemGenerator.sample(db['prefixes']) as String?;
+  } else {
+    prefix = null;
+  }
+
+  if (quality['name'] == 'epic') {
+    suffix = randomItemGenerator.sample(db['suffixes']) as String?;
+  } else {
+    suffix = null;
+  }
+
+  defense =
+      (level * randomItemGenerator.random(5, 10) * quality['factor']! as double).ceil();
+}
 }
 
 void main() {
   var item = Item();
-  item.randomize();
+  item.randomize(db);
 }
 
 final Map<String, dynamic> db = {

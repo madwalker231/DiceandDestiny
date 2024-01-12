@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faker/faker.dart';
 import 'firebase_options.dart';
+import 'random_item_gen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -135,7 +136,7 @@ class GamePlayerSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MenuScreen(role: 'Game Master')),
+                  MaterialPageRoute(builder: (context) => MenuScreen(role: 'Game Master')),
                 );
               },
               child: const Text('Game Master'),
@@ -145,7 +146,7 @@ class GamePlayerSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MenuScreen(role: 'Player')),
+                  MaterialPageRoute(builder: (context) => MenuScreen(role: 'Player')),
                 );
               },
               child: const Text('Player'),
@@ -160,11 +161,21 @@ class GamePlayerSelectionScreen extends StatelessWidget {
 class MenuScreen extends StatelessWidget {
   final String role;
 
-  const MenuScreen({Key? key, required this.role}) : super(key: key);
+  MenuScreen({Key? key, required this.role}) : super(key: key);
 
   String _generateRandomName() {
     final faker = Faker();
     return faker.person.firstName();
+  }
+
+  // Create an instance of RandomItemGenerator
+  final RandomItemGenerator randomItemGenerator = RandomItemGenerator();
+
+  // Function to generate a random item
+  Item _generateRandomItem() {
+    final item = Item();
+    item.randomize(db); // Ensure this method generates random values for the item
+    return item;
   }
 
   @override
@@ -200,9 +211,39 @@ class MenuScreen extends StatelessWidget {
               },
               child: const Text('Generate Random Name'),
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                final randomItem = _generateRandomItem();
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Generated Item'),
+                      content: Column(
+                        children: [
+                          Text('Random Level: ${randomItem.level}'),
+                          Text('Random Slot: ${randomItem.slot}'),
+                          Text('Random Item Name: ${randomItem.name}'),
+                          // Add more information as needed
+                        ],
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text('Generate Random Item'),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
