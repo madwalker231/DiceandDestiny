@@ -1,12 +1,12 @@
 import 'dart:math';
 
 class QOL {
-  static final Unique Unique = Unique();
-  static final Location Location = Location();
-  static final Enemy Enemy = Enemy();
-  static final NPC NPC = NPC();
-  static final Resource Resource = Resource();
-  static final QuestGenerator QuestGenerator = QuestGenerator();
+  static final Unique unique = Unique();
+  static final Location uniqueLocation = Location();
+  static final Enemy uniqueEnemy = Enemy();
+  static final NPC uniqueNPC = NPC();
+  static final Resource uniqueResource = Resource();
+  static final QuestGenerator uniqueQuestGenerator = QuestGenerator();
 }
 
 class Unique {
@@ -110,30 +110,30 @@ class QuestGenerator {
     int questObjectiveCount = 0;
     String? questLocation;
 
-    final questGiver = QOL.NPC.pick();
+    final questGiver = QOL.uniqueNPC.pick();
     final questTask = _pickTask();
 
     switch (questTask) {
       case 'kill':
         questObjectiveCount = Random().nextInt(9) + 2;
-        questObjectiveTarget = QOL.Enemy.pick() + 's';
-        questLocation = QOL.Location.pick();
+        questObjectiveTarget = '${QOL.uniqueEnemy.pick()}s';
+        questLocation = QOL.uniqueLocation.pick();
 
         questObjective = '$questObjectiveCount $questObjectiveTarget in $questLocation';
         break;
       case 'gather':
         questObjectiveCount = Random().nextInt(9) + 2;
-        questObjectiveTarget = QOL.Resource.pick() + 's';
+        questObjectiveTarget = '${QOL.uniqueResource.pick()}s';
         questObjective = '$questObjectiveCount $questObjectiveTarget';
         break;
       case 'find':
-        questObjective = QOL.Unique.pick();
+        questObjective = QOL.unique.pick();
         break;
     }
 
     quest = '$questGiver wants you to $questTask $questObjective';
 
-    return quest!;
+    return quest;
   }
 
   String generate() {
@@ -142,6 +142,6 @@ class QuestGenerator {
 }
 
 void main() {
-  final generator = QOL.QuestGenerator;
-  print(generator.generate());
+  // ignore: unused_local_variable
+  final generator = QOL.uniqueQuestGenerator;
 }

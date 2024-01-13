@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faker/faker.dart';
 import 'firebase_options.dart';
 import 'random_item_gen.dart';
+import 'random_quest_gen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -178,6 +179,13 @@ class MenuScreen extends StatelessWidget {
     return item;
   }
 
+  final QuestGenerator questGenerator = QuestGenerator();
+
+  String _generateRandomQuest() {
+    final randomQuest = questGenerator.generate();
+    return randomQuest;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -239,6 +247,30 @@ class MenuScreen extends StatelessWidget {
                 );
               },
               child: const Text('Generate Random Item'),
+            ),
+            const SizedBox(height:20),
+            ElevatedButton(
+              onPressed: (){
+                final randomQuest = _generateRandomQuest();
+                showDialog(
+                  context : context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Generate Quest'),
+                      content: Text(randomQuest),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }, 
+              child: const Text('Generate Random Quest'),
             ),
           ],
         ),
