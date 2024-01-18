@@ -7,6 +7,7 @@ import 'package:faker/faker.dart';
 import 'firebase_options.dart';
 import 'random_item_gen.dart';
 import 'random_quest_gen.dart';
+import 'random_encounter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -186,6 +187,11 @@ class MenuScreen extends StatelessWidget {
     return randomQuest;
   }
 
+  String _generateRandomEncounter() {
+    final randomEncounter = getEvent();
+    return randomEncounter;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -271,6 +277,30 @@ class MenuScreen extends StatelessWidget {
                 );
               }, 
               child: const Text('Generate Random Quest'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                final randomEncounter = _generateRandomEncounter();
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Generated Encount'),
+                      content: Text(randomEncounter),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text('Generate Random Encounter'),
             ),
           ],
         ),
