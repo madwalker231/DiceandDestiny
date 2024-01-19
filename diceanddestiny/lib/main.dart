@@ -174,10 +174,16 @@ class MenuScreen extends StatelessWidget {
   final RandomItemGenerator randomItemGenerator = RandomItemGenerator();
 
   // Function to generate a random item
-  Item _generateRandomItem() {
-    final item = Item();
-    item.randomize(db); // Ensure this method generates random values for the item
-    return item;
+  Map<String, String> _generateRandomItem() {
+    final itemGenerator = RandomItemGenerator.itemGenerator;
+    final Map<String, String> items = {
+      'uncommon': itemGenerator.generateRandomItem('uncommon'),
+      'common': itemGenerator.generateRandomItem('common'),
+      'rare': itemGenerator.generateRandomItem('rare'),
+      'veryRare': itemGenerator.generateRandomItem('veryRare'),
+      'legendary': itemGenerator.generateRandomItem('legendary'),
+    };
+    return items;
   }
 
   final QuestGenerator questGenerator = QuestGenerator();
@@ -228,19 +234,16 @@ class MenuScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                final randomItem = _generateRandomItem();
+                final randomItemMap = _generateRandomItem();
                 showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text('Generated Item'),
+                      title: const Text('Generated Items'),
                       content: Column(
-                        children: [
-                          Text('Random Level: ${randomItem.level}'),
-                          Text('Random Slot: ${randomItem.slot}'),
-                          Text('Random Item Name: ${randomItem.name}'),
-                          // Add more information as needed
-                        ],
+                        children: randomItemMap.entries
+                            .map((entry) => Text('${entry.key}: ${entry.value}'))
+                            .toList(),
                       ),
                       actions: <Widget>[
                         TextButton(
@@ -252,7 +255,7 @@ class MenuScreen extends StatelessWidget {
                   },
                 );
               },
-              child: const Text('Generate Random Item'),
+              child: const Text('Generate Random Items'),
             ),
             const SizedBox(height:20),
             ElevatedButton(

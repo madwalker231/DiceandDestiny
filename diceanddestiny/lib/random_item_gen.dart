@@ -1,162 +1,152 @@
-// ignore_for_file: unrelated_type_equality_checks
+// ignore_for_file: avoid_print
 
 import 'dart:math';
 
 class RandomItemGenerator {
-  int random([int? min, int? max]) {
-    if (min == null) {
-      min = 0;
-      max = 2;
-    }
-    if (max == null) {
-      max = min;
-      min = 0;
-    }
-    return randomInt(min, max).floor();
-  }
-
-  double randomf([double min = 0, double max = 1]) {
-    return Random().nextDouble() * (max - min) + min;
-  }
-
-  int randomInt(int min, int max) {
-    return Random().nextInt(max - min + 1) + min;
-  }
-
-  List<T> shuffle<T>(List<T> target) 
-  {
-    for (int i = 0; i < 5; i++) 
-    {
-      target.sort((a, b) => random() > 0 ? 1 : -1);
-    }
-    return target;
-  }
-
-  List<T> sample<T>(List<T> target, [int amount = 1]) 
-  {
-    List<T> dummy = List.from(target);
-    if (dummy.length <= amount) return dummy;
-      shuffle(dummy);
-      List<T> sampleList = [];
-    while (sampleList.length < amount) 
-    {
-      sampleList.add(dummy.removeAt(0));
-    }
-    return amount == 1 ? [sampleList[0]] : sampleList;
-  } 
+  static final ItemGenerator itemGenerator = ItemGenerator();
 }
 
-class Item {
-  late int level;
-  late String? prefix;
-  late String? suffix;
-  late Map<String, int> quality;
-  late List<Map<String, dynamic>> attributes;
-  late int? defense;
-  late String? name;
-  late String? slot;
+class ItemGenerator {
+  List <String> uncommon = [
+    'Circlet of Blasting',
+    'Adamantine Armor (Plate Armor)',
+    'Mariners Armor (Chain Mail)',
+    'Potion of Growth',
+    'Headband of Intellect',
+    'Boots of Elevenkind',
+    'Ring of Swimming',
+    'Potion of Hill Giants Strength',
+    'Bag of Tricks, Gray',
+    'Ring of Warmth',
+    'Wind Fan',
+    'Pearl of Power',
+    'Alchemy Jug',
+    'Dust of Sneezing and Choaking',
+    'Immovable Rod',
+    'Cap of Water Breathing',
+    'Wand of Magic Detection',
+    'Eyes of Minute Seeing',
+    'Robe of Useful Items',
+    'Philiter of Love',
+    'Decanter of Endless Water',
+    'Mariners Armor (Leather Armor)',
+    'Potion of Poison Resistance',
+    '+1 Wand of the War Mage',
+    'lantern of Revealing',
+    'Periapt of Health',
+    'Potion of Force Resistance',
+    'Cloak of the Manta Ray',
+    'Driftglobe'
+  ];
 
-  void randomize(Map<String, dynamic> db) {
-  RandomItemGenerator randomItemGenerator = RandomItemGenerator();
+  List <String> common = [
+    'Candle of the Deep',
+    'Wand of Pyrotechnics',
+    'Charlatans Die',
+    'Hewards Handy Spice Pouch',
+    'Mystery Key',
+    'Cast-Off Armor (Spiked Armor)',
+    'Ear Horn of Hearing',
+    'Orb of Time',
+    'Ersatz Eye',
+    'Bead of Refreshment',
+    'Cloak of Billowing',
+    'Boots o false Tracks',
+    'Potion of Healing (Minor)',
+    'Clothes of Mending',
+    'Orb or Direction',
+    'Cloak of Many Fashions',
+    'Smoldering Armor (Ring Mail)',
+    'Cast-Off Armor (Ring Mail)',
+    'Spell Scroll (Level 1 - Snare)',
+    'Shield of Expression',
+    'Perfume of Bewitching'
+  ];
 
-  level = randomItemGenerator.random(1, 101);
-  slot = randomItemGenerator.sample(db['slots']) as String?;
-  name = randomItemGenerator.sample(db['names'][slot!]!) as String?;
-  attributes = [];
+  List <String> rare = [
+    'Folding Boat',
+    'Potion of Stone Giant Strength',
+    'Periapt of Proof Against Poison',
+    'Potion of Heroism',
+    'Quaals Feather Token, Bird',
+    'Potion of Gaseous Form',
+    'Quaals Feather Token, Anchor',
+    'Elixir of Health',
+    'Dragon Slayer (Scimitar)',
+    'Ring of Cold Resistance',
+    'Oil of Etherealness',
+    'Bead of Force',
+    'Quaals Feather Token, Whip',
+    'Spell Scroll (Level 4 - Staggering Smite)',
+    'Potion of Mind Reading',
+    'Potion of Healing (Superior)',
+    'Potion of Frost Giants Strenth',
+    'Quaals Feather Token, Tree',
+    'Quaals Feather Token, Swan Boat'
+  ];
 
-  if (level < 10) {
-    quality = db['qualities'][0];
-  } else {
-    quality = randomItemGenerator.sample(db['qualities']) as Map<String, int>;
-    List<String> attributeList = randomItemGenerator.sample(
-        db['attributes'], quality['attributes'] as int);
-    for (var attribute in attributeList) {
-      attributes.add({
-        'name': attribute,
-        'value': (level * randomItemGenerator.random(1, 5) * quality['factor']! as double)
-            .ceil(),
-      });
+  List <String> veryRare = [
+    'Potion of Invisibility',
+    'Manual of Clay Golems',
+    'Manual of Quickness of Action',
+    'Potion of Vitality',
+    'Potion of Healing (Supreme)',
+    'Potion of Cloud Giant Strength',
+    'Spell Scroll (Level 7 - Power Word Pain)',
+    'Potion of Speed',
+    'Spell Scroll (Level 8 - Earthquake)',
+    'Dancing Sword (Shortsword)',
+    'Frost Brand (Longsword)',
+    'Oil of Sharpness',
+    'Spell Scroll (Level 8 - Power Word Stun)',
+  ];
+
+  List <String> legendary = [
+    'Sword of Answering (Squelcher)',
+    'Potion of Storm Giant Strength',
+    'Sword of Answering (Back Talker)',
+    '+3 Armor (Splint Armor)',
+    'Rod of Resurrection',
+    'Sovereign Glue',
+    'Universal Solvent',
+  ];
+
+  String _generateItem(String rarity) {
+    List<String> itemList;
+    switch (rarity) {
+      case 'uncommon':
+        itemList = uncommon;
+        break;
+      case 'common':
+        itemList = common;
+        break;
+      case 'rare':
+        itemList = rare;
+        break;
+      case 'veryRare':
+        itemList = veryRare;
+        break;
+      case 'legendary':
+        itemList = legendary;
+        break;
+      default:
+        return 'Invalid rarity';
     }
-  }
 
-  if (quality['name'] != 'normal') {
-    prefix = randomItemGenerator.sample(db['prefixes']) as String?;
-  } else {
-    prefix = null;
+    final index = Random().nextInt(itemList.length);
+    return itemList[index];
   }
+   String generateRandomItem([String? s]) {
+    final rarities = ['uncommon', 'common', 'rare', 'veryRare', 'legendary'];
+    final randomRarity = rarities[Random().nextInt(rarities.length)];
+    final randomItem = _generateItem(randomRarity);
 
-  if (quality['name'] == 'epic') {
-    suffix = randomItemGenerator.sample(db['suffixes']) as String?;
-  } else {
-    suffix = null;
+    return randomItem;
   }
-
-  defense =
-      (level * randomItemGenerator.random(5, 10) * quality['factor']! as double).ceil();
-}
 }
 
 void main() {
-  var item = Item();
-  item.randomize(db);
+  final itemGenerator = RandomItemGenerator.itemGenerator;
+  print(itemGenerator.generateRandomItem());
 }
-
-final Map<String, dynamic> db = {
-  'attributes': [
-    ' strength',
-    ' dexterity',
-    ' vitality',
-    ' energy',
-    ' defense',
-    ' parry',
-    ' dodge',
-    ' lighting resist',
-    ' physical resist',
-    ' fire resist',
-    ' ice resist',
-    ' poison resist',
-    ' resistance to all elements',
-    ' of damage reduction',
-    ' of health increase',
-    ' of mana increase',
-  ],
-  'slots': ['head', 'torso', 'hands', 'legs', 'feet'],
-  'qualities': [
-    {'name': 'normal', 'attributes': 0, 'factor': 1},
-    {'name': 'magical', 'attributes': 2, 'factor': 1.2},
-    {'name': 'rare', 'attributes': 3, 'factor': 1.8},
-    {'name': 'epic', 'attributes': 5, 'factor': 2.6}
-  ],
-  'names': {
-    'head': ['Cap', 'Helmet', 'Helm', 'Bascinet'],
-    'torso': ['Armor', 'Breastplate', 'Cuirass'],
-    'hands': ['Gloves', 'Gauntlets'],
-    'legs': ['Pants', 'Greaves'],
-    'feet': ['Boots', 'Sandals', 'Sabatons'],
-  },
-  'prefixes': [
-    'Rusty ',
-    'Special ',
-    'Shiny ',
-    'Empowered ',
-    'Magical ',
-    'Blazing ',
-    'Icy ',
-    'Enchanted ',
-    'Mysterious ',
-    'Imbued ',
-    ''
-  ],
-  'suffixes': [
-    ' of Power',
-    ' of the Wolf',
-    ' of the Serpent',
-    ' of the Devil',
-    ' of Alacrity',
-    ' of Might',
-    ' of Radiance',
-    ' of the Centaur',
-    ' of Vanity',
-    ''
-  ],
-};
+ 
