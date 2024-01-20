@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Dice and Destiny'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -177,11 +178,14 @@ class MenuScreen extends StatelessWidget {
   Map<String, String> _generateRandomItem() {
     final itemGenerator = RandomItemGenerator.itemGenerator;
     final Map<String, String> items = {
-      'uncommon': itemGenerator.generateRandomItem('uncommon'),
       'common': itemGenerator.generateRandomItem('common'),
+      'uncommon': itemGenerator.generateRandomItem('uncommon'),
       'rare': itemGenerator.generateRandomItem('rare'),
       'veryRare': itemGenerator.generateRandomItem('veryRare'),
       'legendary': itemGenerator.generateRandomItem('legendary'),
+      'artifact': itemGenerator.generateRandomItem('artifact'),
+      'wondrous': itemGenerator.generateRandomItem('wondrous'),
+      'farTravler': itemGenerator.generateRandomItem('farTraveler'),
     };
     return items;
   }
