@@ -8,6 +8,7 @@ import 'firebase_options.dart';
 import 'random_item_gen.dart';
 import 'random_quest_gen.dart';
 import 'random_encounter.dart';
+import 'random_npc_gen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -190,6 +191,19 @@ class MenuScreen extends StatelessWidget {
     return items;
   }
 
+  final RandomNPCGenerator randomNPCGenerator = RandomNPCGenerator();
+
+  Map<String, String> _generateRandomNPC() {
+    final npcGenerator = RandomNPCGenerator.npcGenerator;
+    final Map<String, String> npcs = {
+      'race': npcGenerator.generateRandomNPC('race'),
+      'gender': npcGenerator.generateRandomNPC('gender'),
+      'age': npcGenerator.generateRandomNPC('age'),
+      'occupation': npcGenerator.generateRandomNPC('occupation'),
+    };
+    return npcs;
+  }
+
   final QuestGenerator questGenerator = QuestGenerator();
 
   String _generateRandomQuest() {
@@ -260,6 +274,32 @@ class MenuScreen extends StatelessWidget {
                 );
               },
               child: const Text('Generate Random Items'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                final randomNPCMap = _generateRandomNPC();
+                showDialog(
+                  context: context, 
+                  builder: (context) {
+                    return AlertDialog (
+                      title: const Text('Generated NPC'),
+                      content: Column(
+                        children: randomNPCMap.entries
+                        .map((entry) => Text('${entry.key}: ${entry.value}'))
+                        .toList(),
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text('Generate Random NPC'),
             ),
             const SizedBox(height:20),
             ElevatedButton(
