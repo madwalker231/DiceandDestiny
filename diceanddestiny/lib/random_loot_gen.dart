@@ -2,11 +2,11 @@
 
 import 'dart:math';
 
-class RandomItemGenerator {
-  static final ItemGenerator itemGenerator = ItemGenerator();
+class RandomLootGenerator {
+  static final LootGenerator lootGenerator = LootGenerator();
 }
-
-class ItemGenerator {
+class LootGenerator 
+{
   List<String> common = [
     'Bottle of Boundless Coffee',
     'Cartographer\'s Map Case',
@@ -58,6 +58,9 @@ class ItemGenerator {
     'Orb of Shielding (Risian Shale)',
     'Orb of Shielding (Shavarran Chert)',
     'Orb of Shielding (Xorian Marble)',
+  ];
+
+  List<String> minorCommon = [
     'Bead of Nourishment', //Minor Common Item
     'Bead of Refreshment', //Minor Common Item
     'Boots of False Tracks', //Minor Common Item
@@ -112,7 +115,7 @@ class ItemGenerator {
     'Walloping Ammunition' //Minor Common Item
   ];
 
-  List <String> uncommon = [
+  List<String> uncommon = [
     '+1 All-Purpose Tool',
     '+1 Amulet of the Devout',
     '+1 Arcane Grimoire',
@@ -232,7 +235,9 @@ class ItemGenerator {
     'Mind Carapace Armor',
     'Slumbering Dragons Wrath Weapon',
     'Winged Ammunition',
-    //Major Items Start
+  ];
+
+  List<String> majorUncommon = [
     '+1 Rod of the Pact Keeper', //Major Uncommon Items
     '+1 Wand of the War Mage', //Major Uncommon Items
     'Amulet of Proof against Detection and Location', //Major Uncommon Items
@@ -292,7 +297,9 @@ class ItemGenerator {
     'Adamantine Armor', //Major Uncommon Items
     'Sword of Vengeance', //Major Uncommon Items
     'Weapon of Warning', //Major Uncommon Items
-    //Minor Items Start
+  ];
+
+  List<String> minorUncommon = [
     'Alchemy Jug', //Minor Uncommon Item
     'Bag of Holding', //Minor Uncommon Item
     'Cap of Water Breathing', //Minor Uncommon Item
@@ -509,7 +516,9 @@ class ItemGenerator {
     'Green Chromatic Rose',
     'Red Chromatic Rose',
     'White Chromatic Rose',
-    //Major Items Sart Here
+  ];
+
+  List<String> majorRare = [
     '+2 Rod of the Pact Keeper', //Major Rare Item
     '+2 Wand of the War Mage', //Major Rare Item
     'Amulet of Health', //Major Rare Item
@@ -619,7 +628,9 @@ class ItemGenerator {
     'Armor of Psychic Resistance', //Major Rare Item
     'Armor of Radiant Resistance', //Major Rare Item
     'Armor of Thunder Resistance', //Major Rare Item
-    //Minor Items Start here
+  ];
+
+  List<String> minorRare = [
     'Bag of Beans', //Minor Rare Item
     'Bead of Force', //Minor Rare Item
     'Chime of Opening', //Minor Rare Item
@@ -782,7 +793,9 @@ class ItemGenerator {
     'Psychic Absorbing Tattoo',
     'Radiant Absorbing Tattoo',
     'Thunder Absorbing Tattoo',
-    //Major Very Rare Items Start here
+  ];
+
+  List<String> majorVeryRare = [
     '+3 Rod of the Pact Keeper', //Major Very Rare Item
     '+3 Wand of the War Mage', //Major Very Rare Item
     'Amulet of the Planes', //Major Very Rare Item
@@ -858,7 +871,9 @@ class ItemGenerator {
     'Frost Brand', //Major Very Rare Item
     'Nine Lives Stealer', //Major Very Rare Item
     'Sword of Sharpness', //Major Very Rare Item
-    //Minor Very Rare Items Start Here
+  ];
+
+  List<String>  minorVeryRare = [
     'Bag of Devouring', //Minor Very Rare Item
     'Horseshoes of a Zephyr', //Minor Very Rare Item
     'Nolzur\'s Marvelous Pigments', //Minor Very Rare Item
@@ -964,7 +979,9 @@ class ItemGenerator {
     "Ascendant Dragon's Wrath Weapon",
     'Dragonlance',
     'Sword of the Planes',
-    //Major Legendary Items Start Here
+  ];
+
+  List<String> majorLegendary = [
     'Apparatus of Kwalish', //Major Legendary Item
     'Armor of Invulnerability', //Major Legendary Item
     'Belt of Cloud Giant Strength', //Major Legendary Item
@@ -1017,7 +1034,9 @@ class ItemGenerator {
     'Holy Avenger', //Major Legendary Item
     'Luck Blade', //Major Legendary Item
     'Vorpal Sword', //Major Legendary Item
-    //Minor Legendary Items Start Here
+  ];
+
+  List<String> minorLegendary = [
     'Potion of Storm Giant Strength', //Minor Legendary Item
     'Sovereign Glue', //Minor Legendary Item
     'Spell Scroll (9th Level)', //Minor Legendary Item
@@ -1155,51 +1174,79 @@ class ItemGenerator {
     'Spiked Armor'
   ];
 
-  String _generateItem(String rarity) {
-    List<String> itemList;
-    switch (rarity) {
-      case 'uncommon':
-        itemList = uncommon;
-        break;
+  String _generateLoot(String loot) {
+    List<String> lootItems;
+    switch(loot) {
       case 'common':
-        itemList = common;
-        break;
-      case 'rare':
-        itemList = rare;
-        break;
-      case 'veryRare':
-        itemList = veryRare;
-        break;
-      case 'legendary':
-        itemList = legendary;
-        break;
-      case 'artifact':
-        itemList = artifacts;
-        break;
-      case 'wondrous':
-        itemList = wondrous;
-        break;
-      case 'farTraveler':
-        itemList = farTravelerItems;
-      default:
-        return 'Invalid rarity';
+      lootItems = common;
+      break;
+    case 'minorCommon':
+      lootItems = minorCommon;
+      break;
+    case 'uncommon':
+      lootItems = uncommon;
+      break;
+    case 'majorUncommon':
+      lootItems = majorUncommon;
+      break;
+    case 'minorUncommon':
+      lootItems = minorUncommon;
+      break;
+    case 'rare':
+      lootItems = rare;
+      break;
+    case 'majorRare':
+      lootItems = majorRare;
+      break;
+    case 'minorRare':
+      lootItems = minorRare;
+      break;
+    case 'veryRare':
+      lootItems = veryRare;
+      break;
+    case 'majorVeryRare':
+      lootItems = majorVeryRare;
+      break;
+    case 'minorVeryRare':
+      lootItems = minorVeryRare;
+      break;
+    case 'legendary':
+      lootItems = legendary;
+      break;
+    case 'majorLegendary':
+      lootItems = majorLegendary;
+      break;
+    case 'minorLegendary':
+      lootItems = minorLegendary;
+      break;
+    case 'artifact':
+      lootItems = artifacts;
+      break;
+    case 'wondrous':
+      lootItems = wondrous;
+      break;
+    case 'farTraveler':
+      lootItems = farTravelerItems;
+      break;
+    default:
+      return 'Invalid Loot Item';
     }
-
-    final index = Random().nextInt(itemList.length);
-    return itemList[index];
+    final index = Random().nextInt(lootItems.length);
+    return lootItems[index];
   }
-   String generateRandomItem([String? s]) {
-    final rarities = ['common', 'uncommon', 'rare', 'veryRare', 'legendary',
-      'artifact', 'wondrous', 'farTraveler'];
-    final randomRarity = rarities[Random().nextInt(rarities.length)];
-    final randomItem = _generateItem(randomRarity);
-
-    return randomItem;
+  String generateRandomLoot([String? s]) {
+    final treasures = ['common', 'minorCommon', 'uncommon', 'majorUncommon', 'minorUncommon', 
+      'rare', 'majorRare', 'minorRare', 'veryRare', 'majorVeryRare', 'minorVeryRare', 'legendary',
+       'majorLegendary', 'minorLegendary', 'artifact', 'wondrous', 'farTraveler'];
+    final randomLoot = treasures[Random().nextInt(treasures.length)];
+    final lootGenerated = _generateLoot(randomLoot);
+    return lootGenerated;
   }
 }
 
 void main() {
-  final itemGenerator = RandomItemGenerator.itemGenerator;
-  print(itemGenerator.generateRandomItem());
+  final itemLooted = RandomLootGenerator.lootGenerator;
+  print(itemLooted.generateRandomLoot());
 }
- 
+
+
