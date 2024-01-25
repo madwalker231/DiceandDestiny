@@ -55,5 +55,11 @@
       });
     });
   </script>
+  <script>
+    if (window.location.hostname == "localhost") 
+    {
+      navigator.serviceWorker.register('flutter_service_worker.js');
+    }
+  </script>
 </body>
 </html>

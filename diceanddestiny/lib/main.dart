@@ -151,7 +151,7 @@ class GamePlayerSelectionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MenuScreen(role: 'Player')),
+                  MaterialPageRoute(builder: (context) => MenuScreen(role: 'Player')), 
                 );
               },
               child: const Text('Player'),
@@ -244,167 +244,231 @@ class MenuScreen extends StatelessWidget {
   }    
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+  Widget build(BuildContext context) 
+  {
+    return Scaffold
+    (
+      appBar: AppBar
+      (
         title: Text('$role Menu'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                final randomName = _generateRandomName();
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Generated Name'),
-                      content: Text('Random Name: $randomName'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('OK'),
+      body: Container
+      (
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration
+        (
+          image: DecorationImage
+          (
+            image: AssetImage("images/dmscreen.jpg"),
+            fit: BoxFit.cover
+          ),
+        ),      
+      child: Center
+      (
+          child: Column
+          (
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: 
+            [
+              ElevatedButton
+              (
+                onPressed: () 
+                {
+                  final randomName = _generateRandomName();
+                  showDialog(
+                    context: context,
+                    builder: (context) 
+                    {
+                      return AlertDialog
+                      (
+                        title: const Text('Generated Name'),
+                        content: Text('Random Name: $randomName'),
+                        actions: <Widget>
+                        [
+                          TextButton
+                          (
+                            onPressed: () 
+                            {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('Generate Random Name'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton
+              (
+                onPressed: () 
+                {
+                  final randomItemMap = _generateRandomItem();
+                  showDialog
+                  (
+                    context: context,
+                    builder: (context) 
+                    {
+                      return AlertDialog
+                      (
+                        title: const Text('Generated Items'),
+                        content: Column
+                        (
+                          children: randomItemMap.entries
+                              .map((entry) => Text('${entry.key}: ${entry.value}'))
+                              .toList(),
                         ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Generate Random Name'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final randomItemMap = _generateRandomItem();
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Generated Items'),
-                      content: Column(
-                        children: randomItemMap.entries
-                            .map((entry) => Text('${entry.key}: ${entry.value}'))
-                            .toList(),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('OK'),
+                        actions: <Widget>
+                        [
+                          TextButton
+                          (
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('Generate Random Items'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton
+              (
+                onPressed: () 
+                {
+                  final randomNPCMap = _generateRandomNPC();
+                  showDialog(
+                    context: context, 
+                    builder: (context) 
+                    {
+                      return AlertDialog 
+                      (
+                        title: const Text('Generated NPC'),
+                        content: Column
+                        (
+                          children: randomNPCMap.entries
+                          .map((entry) => Text('${entry.key}: ${entry.value}'))
+                          .toList(),
                         ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Generate Random Items'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final randomNPCMap = _generateRandomNPC();
-                showDialog(
-                  context: context, 
-                  builder: (context) {
-                    return AlertDialog (
-                      title: const Text('Generated NPC'),
-                      content: Column(
-                        children: randomNPCMap.entries
-                        .map((entry) => Text('${entry.key}: ${entry.value}'))
-                        .toList(),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('OK'),
+                        actions: <Widget>
+                        [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('Generate Random NPC'),
+              ),
+              const SizedBox(height:20),
+              ElevatedButton
+              (
+                onPressed: ()
+                {
+                  final randomQuest = _generateRandomQuest();
+                  showDialog
+                  (
+                    context : context,
+                    builder: (context) 
+                    {
+                      return AlertDialog
+                      (
+                        title: const Text('Generate Quest'),
+                        content: Text(randomQuest),
+                        actions: <Widget>
+                        [
+                          TextButton
+                          (
+                            onPressed: () 
+                            {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }, 
+                child: const Text('Generate Random Quest'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton
+              (
+                onPressed: () 
+                {
+                  final randomEncounter = _generateRandomEncounter();
+                  showDialog
+                  (
+                    context: context,
+                    builder: (context) 
+                    {
+                      return AlertDialog
+                      (
+                        title: const Text('Generated Encount'),
+                        content: Text(randomEncounter),
+                        actions: <Widget>
+                        [
+                          TextButton
+                          (
+                            onPressed: () 
+                            {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('Generate Random Encounter'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton
+              (
+                onPressed: () 
+                {
+                  final randomLootMap = _generateRandomLoot();
+                  showDialog
+                  (
+                    context: context,
+                    builder: (context) 
+                    {
+                      return AlertDialog
+                      (
+                        title: const Text('Generated Loot'),
+                        content: Column
+                        (
+                          children: randomLootMap.entries
+                          .map((entry) => Text('${entry.key}: ${entry.value}'))
+                          .toList(),
                         ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Generate Random NPC'),
-            ),
-            const SizedBox(height:20),
-            ElevatedButton(
-              onPressed: (){
-                final randomQuest = _generateRandomQuest();
-                showDialog(
-                  context : context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Generate Quest'),
-                      content: Text(randomQuest),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }, 
-              child: const Text('Generate Random Quest'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final randomEncounter = _generateRandomEncounter();
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Generated Encount'),
-                      content: Text(randomEncounter),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Generate Random Encounter'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final randomLootMap = _generateRandomLoot();
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Generated Loot'),
-                      content: Column(
-                        children: randomLootMap.entries
-                        .map((entry) => Text('${entry.key}: ${entry.value}'))
-                        .toList(),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: const Text('Generate Random Loot'),
-            ),
-          ],
+                        actions: <Widget>
+                        [
+                          TextButton
+                          (
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Text('Generate Random Loot'),
+              ),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }

@@ -1248,5 +1248,3 @@ void main() {
   final itemLooted = RandomLootGenerator.lootGenerator;
   print(itemLooted.generateRandomLoot());
 }
-
-
