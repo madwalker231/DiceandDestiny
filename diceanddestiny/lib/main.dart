@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(98, 58, 107, 148)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Dice and Destiny'),
+      // home: const MyHomePage(title: 'Dice and Destiny'),
+      home: const GamePlayerSelectionScreen(), //Comment for UI test
       debugShowCheckedModeBanner: false,
     );
   }
@@ -128,33 +129,83 @@ class GamePlayerSelectionScreen extends StatelessWidget {
   const GamePlayerSelectionScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Role'),
+  Widget build(BuildContext context) 
+  {
+    return Scaffold
+    (
+      appBar: AppBar
+      (
+        title: const Text
+        (
+          'Select Your Role', 
+          style: TextStyle
+          (
+            fontFamily: 'ArshaqRegular',
+            fontSize: 30,
+            color: Colors.black,
+          ),
+          
+        ),
       ),
-      body: Center(
-        child: Column(
+      body: Container
+      (
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration
+        (
+          image: DecorationImage
+          (
+            image: AssetImage("images/titlescreen.jpg"),
+            fit: BoxFit.cover
+          ),
+        ), 
+        child: Column
+        (
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
+          children: 
+          [
+            ElevatedButton
+            (
+              onPressed: () 
+              {
+                Navigator.push
+                (
                   context,
                   MaterialPageRoute(builder: (context) => MenuScreen(role: 'Game Master')),
                 );
               },
-              child: const Text('Game Master'),
+              child: const Text
+              (
+                'Game Master',
+                style: TextStyle
+                (
+                  fontFamily: 'ArshaqRegular',
+                  fontSize: 40,
+                  color: Colors.black,                  
+                ),
+              ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
+            ElevatedButton
+            (
+              onPressed: () 
+              {
+                Navigator.push
+                (
                   context,
                   MaterialPageRoute(builder: (context) => MenuScreen(role: 'Player')), 
                 );
               },
-              child: const Text('Player'),
+              child: const Text
+              (
+                'Player',
+                style: TextStyle
+                (
+                  fontFamily: 'ArshaqRegular',
+                  fontSize: 40,
+                  color: Colors.black,
+                ),
+              ),
             ),
           ],
         ),
@@ -250,7 +301,16 @@ class MenuScreen extends StatelessWidget {
     (
       appBar: AppBar
       (
-        title: Text('$role Menu'),
+        title: Text
+        (
+          '$role Menu',
+          style: const TextStyle
+            (
+            fontFamily: 'ArshaqRegular',
+            fontSize: 40,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: Container
       (
@@ -282,8 +342,24 @@ class MenuScreen extends StatelessWidget {
                     {
                       return AlertDialog
                       (
-                        title: const Text('Generated Name'),
-                        content: Text('Random Name: $randomName'),
+                        title: const Text('Generated Name',
+                        style: TextStyle
+                          (
+                            fontFamily: 'ArshaqRegular',
+                            fontSize: 40,
+                            color: Colors.black,
+                          ),
+                        ),
+                        content: Text
+                        (
+                          'Random Name: $randomName',
+                          style: const TextStyle
+                          (
+                            fontFamily: 'ArshaqRegular',
+                            fontSize: 30,
+                            color: Colors.black,
+                          ),
+                        ),
                         actions: <Widget>
                         [
                           TextButton
