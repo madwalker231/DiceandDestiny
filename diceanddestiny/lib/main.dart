@@ -135,15 +135,16 @@ class GamePlayerSelectionScreen extends StatelessWidget {
     (
       appBar: AppBar
       (
-        title: const Text
+        title: const Center
         (
-          'Select Your Role', 
+          child: Text('Select Your Role',
+          textAlign: TextAlign.center, 
           style: TextStyle
           (
             fontFamily: 'ArshaqRegular',
-            fontSize: 30,
+            fontSize: 40,
             color: Colors.black,
-          ),
+          ),          )          
           
         ),
       ),
@@ -156,7 +157,7 @@ class GamePlayerSelectionScreen extends StatelessWidget {
           image: DecorationImage
           (
             image: AssetImage("images/titlescreen.jpg"),
-            fit: BoxFit.cover
+            fit: BoxFit.fill
           ),
         ), 
         child: Column
@@ -321,7 +322,7 @@ class MenuScreen extends StatelessWidget {
           image: DecorationImage
           (
             image: AssetImage("images/dmscreen.jpg"),
-            fit: BoxFit.cover
+            fit: BoxFit.fill
           ),
         ),      
       child: Center
