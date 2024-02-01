@@ -1,13 +1,20 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, constant_pattern_never_matches_value_type, unused_local_variable
 
 import 'dart:math';
+import 'package:faker/faker.dart';
 
-class RandomNPCGenerator {
+class NpcClasses {
   static final NPCGenerator npcGenerator = NPCGenerator();
+  static final Race race = Race();
+  static final Gender gender = Gender();
+  static final Age age = Age();
+  static final Occupation occupation = Occupation();
+  static final ChildOccupation childOccupation = ChildOccupation();
 }
 
-class NPCGenerator {
-  List<String> race = [
+class Race {
+  final List<String> race = 
+  [
     'Dragonborn',
     'Dwarf',
     'Hill Dwarf',
@@ -26,13 +33,28 @@ class NPCGenerator {
     'Human',
     'Teifling'
   ];
+  String pick()
+  {
+    final index = Random().nextInt(race.length);
+    return race[index];
+  }
+}
 
-  List<String> gender = [
+class Gender {
+  final List<String> gender = 
+  [
     'Male',
     'Female'
   ];
+  String pick() {
+    final index = Random().nextInt(gender.length);
+    return gender[index];
+  }
+}
 
-  List <String> age = [
+class Age {
+  final List <String> age = 
+  [
     'Child',
     'Teenager',
     'Young Adult',
@@ -40,8 +62,15 @@ class NPCGenerator {
     'Middle Aged Adult',
     'Elderly'
   ];
+  String pick() {
+    final index = Random().nextInt(age.length);
+    return age[index];
+  }
+}
 
-  List<String> occupation = [
+class Occupation {
+  final List<String> occupation = 
+  [
     'Shepard',
     'Mortician',
     'Stonemason',
@@ -88,43 +117,79 @@ class NPCGenerator {
     'Monk',
     'Monster Hunter',
     'Nomad',
-    'Flok Hero',
-    'Adventure'
+    'Folk Hero',
+    'Adventurer'
   ];
+  String pick() {
+    final index = Random().nextInt(occupation.length);
+    return occupation[index];
+  }
+}
 
-  String _generateNPC(String npc) {
-    List<String> npcList;
-    switch (npc) {
-      case 'race':
-        npcList = race;
-        break;
-      case 'gender':
-        npcList = gender;
-        break;
-      case 'age':
-        npcList = age;
-        break;
-      case 'occupation':
-        npcList = occupation;
-        break;
-      default:
-        return 'Invalid NPC';
+class ChildOccupation {
+  final List<String> kids =
+  [
+    'Student',
+    'Orphan',
+    'Street Urchin',
+    'Gang Member',
+    'Nobles Child',
+    'Child of local tradesman',
+  ];
+  String pick()
+  {
+    final index = Random().nextInt(kids.length);
+    String selectedTrade = kids[index];
+    
+    if (selectedTrade == 'Child of local tradesman')
+    {
+      Occupation regularJob = Occupation();
+      selectedTrade = 'Child of the local ${regularJob.pick()}';
     }
+    return selectedTrade;
+  }
+}
 
-    final npcIndex = Random().nextInt(npcList.length);
-    return npcList[npcIndex];
+class NPCGenerator { 
+  final Race _race = Race();
+  final Gender _gender = Gender();
+  final Age _age = Age();
+  final Occupation _occupation = Occupation();
+  final ChildOccupation _childOccupation = ChildOccupation();
+
+  String _generateRandomName()
+  {
+    final faker = Faker();
+    return faker.person.firstName();
   }
 
-  String generateRandomNPC([String? s]) {
-    final npcs = ['race', 'gender', 'age', 'occupation'];
-    final randomNPC = npcs[Random().nextInt(npcs.length)];
-    final randomGenNpc = _generateNPC(randomNPC);
+  String generateNPC() {
+    String npcName = _generateRandomName();
+    String npcRace = _race.pick();
+    String npcGender = _gender.pick();
+    String npcAge = _age.pick();
+    String npcOccupation = _occupation.pick();
 
-    return randomGenNpc;
+    if (npcAge == 'Child')
+    {
+      npcOccupation = _childOccupation.pick();
+    }
+    else
+    {
+      npcOccupation = _occupation.pick();
+    }
+
+    String npc = 'Name: $npcName\nRace: $npcRace\nGender: $npcGender\nAge: $npcAge\nOccupation: $npcOccupation';
+
+    return npc;
+  }
+
+  String generate() {
+    return generateNPC();
   }
 }
 
 void main() {
-  final npcGenerator = RandomNPCGenerator.npcGenerator;
-  print(npcGenerator.generateRandomNPC());
+  final generatedNPC = NPCGenerator().generate();
+  print(generatedNPC);
 }
