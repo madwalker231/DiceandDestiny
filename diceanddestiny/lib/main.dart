@@ -263,31 +263,12 @@ class MenuScreen extends StatelessWidget {
     return randomEncounter;
   }
   
-  final RandomLootGenerator randomLoot = RandomLootGenerator();
+  final LootGenerator randomLoot = LootGenerator();
 
-  Map<String, String> _generateRandomLoot() {
-    final loot = RandomLootGenerator.lootGenerator;
-    final Map<String, String> looted = {
-      'common': loot.generateRandomLoot('common'),
-      'minorCommon': loot.generateRandomLoot('minorCommon'),
-      'uncommon': loot.generateRandomLoot('uncommon'),
-      'majorUncommon': loot.generateRandomLoot('majorUncommon'),
-      'minorUncommon': loot.generateRandomLoot('minorUncommon'),
-      'rare': loot.generateRandomLoot('rare'),
-      'majorRare': loot.generateRandomLoot('majorRare'),
-      'minorRare': loot.generateRandomLoot('minorRare'),
-      'veryRare': loot.generateRandomLoot('veryRare'),
-      'majorVeryRare': loot.generateRandomLoot('majorVeryRare'),
-      'minorVeryRare': loot.generateRandomLoot('minorVeryRare'),
-      'legendary': loot.generateRandomLoot('legendary'),
-      'majorLegendary': loot.generateRandomLoot('majorLedgendary'),
-      'minorLedgendary': loot.generateRandomLoot('minorLegedary'),
-      'artifact': loot.generateRandomLoot('artifact'),
-      'wondrous': loot.generateRandomLoot('wondrous'),
-      'farTravler': loot.generateRandomLoot('farTraveler'),
-    };
-    return looted;
-  }    
+  String _generateRandomLoot() {
+    final partyLoot = randomLoot.generate();
+    return partyLoot;
+  }
 
   @override
   Widget build(BuildContext context) 
@@ -417,7 +398,8 @@ class MenuScreen extends StatelessWidget {
                     context: context,
                     builder: (context) 
                     {
-                      return AlertDialog(
+                      return AlertDialog
+                      (
                         title: const Text('Generate NPC'),
                         content: Text(randomNPC),
                         actions: <Widget>
@@ -506,7 +488,7 @@ class MenuScreen extends StatelessWidget {
               (
                 onPressed: () 
                 {
-                  final randomLootMap = _generateRandomLoot();
+                  final randomLoot = _generateRandomLoot();
                   showDialog
                   (
                     context: context,
@@ -514,18 +496,16 @@ class MenuScreen extends StatelessWidget {
                     {
                       return AlertDialog
                       (
-                        title: const Text('Generated Loot'),
-                        content: Column
-                        (
-                          children: randomLootMap.entries
-                          .map((entry) => Text('${entry.key}: ${entry.value}'))
-                          .toList(),
-                        ),
+                        title: const Text('Generate Loot'),
+                        content: Text(randomLoot),
                         actions: <Widget>
                         [
                           TextButton
                           (
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () 
+                            {
+                              Navigator.pop(context);
+                            },
                             child: const Text('OK'),
                           ),
                         ],

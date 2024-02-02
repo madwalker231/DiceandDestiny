@@ -4,10 +4,25 @@ import 'dart:math';
 
 class RandomLootGenerator {
   static final LootGenerator lootGenerator = LootGenerator();
+  static final Common common = Common();
+  static final MinorCommon minorCommon = MinorCommon();
+  static final Uncommon uncommon = Uncommon();
+  static final MinorUncommon minorUncommon = MinorUncommon();
+  static final Rare rare = Rare();
+  static final MajorRare majorRare = MajorRare();
+  static final MinorRare minorRare = MinorRare();
+  static final VeryRare veryRare = VeryRare();
+  static final MajorVeryRare majorVeryRare = MajorVeryRare();
+  static final MinorVeryRare minorVeryRare = MinorVeryRare();
+  static final Legendary legendary = Legendary();
+  static final MajorLegendary majorLegendary = MajorLegendary();
+  static final MinorLegendary minorLegendary = MinorLegendary();
+  static final Artifact artifact = Artifact();
+  static final Wondrous wondrous = Wondrous();
 }
-class LootGenerator 
-{
-  List<String> common = [
+class Common {  
+  final List<String> common = 
+  [
     'Bottle of Boundless Coffee',
     'Cartographer\'s Map Case',
     'Chest of Preserving',
@@ -59,8 +74,13 @@ class LootGenerator
     'Orb of Shielding (Shavarran Chert)',
     'Orb of Shielding (Xorian Marble)',
   ];
-
-  List<String> minorCommon = [
+  String pick() {
+    final index = Random().nextInt(common.length);
+    return common[index];
+  }
+}
+class MinorCommon {
+  final List<String> minorCommon = [
     'Bead of Nourishment', //Minor Common Item
     'Bead of Refreshment', //Minor Common Item
     'Boots of False Tracks', //Minor Common Item
@@ -114,8 +134,13 @@ class LootGenerator
     'Smoldering Armor', //Minor Common Item
     'Walloping Ammunition' //Minor Common Item
   ];
-
-  List<String> uncommon = [
+  String pick(){
+    final index = Random().nextInt(minorCommon.length);
+    return minorCommon[index];
+  }
+}
+class Uncommon {
+  final List<String> uncommon = [
     '+1 All-Purpose Tool',
     '+1 Amulet of the Devout',
     '+1 Arcane Grimoire',
@@ -236,8 +261,13 @@ class LootGenerator
     'Slumbering Dragons Wrath Weapon',
     'Winged Ammunition',
   ];
-
-  List<String> majorUncommon = [
+  String pick() {
+    final index = Random().nextInt(uncommon.length);
+    return uncommon[index];
+  }
+}
+class MajorUncommon {
+  final List<String> majorUncommon = [
     '+1 Rod of the Pact Keeper', //Major Uncommon Items
     '+1 Wand of the War Mage', //Major Uncommon Items
     'Amulet of Proof against Detection and Location', //Major Uncommon Items
@@ -298,8 +328,13 @@ class LootGenerator
     'Sword of Vengeance', //Major Uncommon Items
     'Weapon of Warning', //Major Uncommon Items
   ];
-
-  List<String> minorUncommon = [
+  String pick() {
+    final index = Random().nextInt(majorUncommon.length);
+    return majorUncommon[index];
+  }
+}
+class MinorUncommon {
+  final List<String> minorUncommon = [
     'Alchemy Jug', //Minor Uncommon Item
     'Bag of Holding', //Minor Uncommon Item
     'Cap of Water Breathing', //Minor Uncommon Item
@@ -352,8 +387,13 @@ class LootGenerator
     'Potion of Radiant Resistance', //Minor Uncommon Item
     'Potion of Thunder Resistance' //Minor Uncommon Item
   ];
-
-  List<String> rare = [
+  String pick() {
+    final index = Random().nextInt(minorUncommon.length);
+    return minorUncommon[index];
+  }
+}
+class Rare {
+   final List<String> rare = [
     '+1 Fate Dealer\'s Deck',
     '+2 All-Purpose Tool',
     '+2 Amulet of the Devout',
@@ -517,8 +557,13 @@ class LootGenerator
     'Red Chromatic Rose',
     'White Chromatic Rose',
   ];
-
-  List<String> majorRare = [
+  String pick() {
+    final index = Random().nextInt(rare.length);
+    return rare[index];
+  }
+}
+class MajorRare {
+  final List<String> majorRare = [
     '+2 Rod of the Pact Keeper', //Major Rare Item
     '+2 Wand of the War Mage', //Major Rare Item
     'Amulet of Health', //Major Rare Item
@@ -629,8 +674,13 @@ class LootGenerator
     'Armor of Radiant Resistance', //Major Rare Item
     'Armor of Thunder Resistance', //Major Rare Item
   ];
-
-  List<String> minorRare = [
+  String pick() {
+    final index = Random().nextInt(majorRare.length);
+    return majorRare[index];
+  }
+}
+class MinorRare {
+  final List<String> minorRare = [
     'Bag of Beans', //Minor Rare Item
     'Bead of Force', //Minor Rare Item
     'Chime of Opening', //Minor Rare Item
@@ -669,8 +719,13 @@ class LootGenerator
     'Spell Scroll (5th Level)', //Minor Rare Item
     '+2 Ammunition' //Minor Rare Item
   ];
-
-  List<String> veryRare = [
+  String pick() {
+    final index = Random().nextInt(minorRare.length);
+    return minorRare[index];
+  }
+}
+class VeryRare {
+  final List<String> veryRare = [
     '+2 Fate Dealer\'s Deck',
     '+3 All-Purpose Tool',
     '+3 Amulet of the Devout',
@@ -794,8 +849,13 @@ class LootGenerator
     'Radiant Absorbing Tattoo',
     'Thunder Absorbing Tattoo',
   ];
-
-  List<String> majorVeryRare = [
+  String pick() {
+    final index = Random().nextInt(veryRare.length);
+    return veryRare[index];
+  }
+}
+class MajorVeryRare {
+  final List<String> majorVeryRare = [
     '+3 Rod of the Pact Keeper', //Major Very Rare Item
     '+3 Wand of the War Mage', //Major Very Rare Item
     'Amulet of the Planes', //Major Very Rare Item
@@ -872,8 +932,13 @@ class LootGenerator
     'Nine Lives Stealer', //Major Very Rare Item
     'Sword of Sharpness', //Major Very Rare Item
   ];
-
-  List<String>  minorVeryRare = [
+  String pick() {
+    final index = Random().nextInt(majorVeryRare.length);
+    return majorVeryRare[index];
+  }
+}
+class MinorVeryRare {
+  final List<String>  minorVeryRare = [
     'Bag of Devouring', //Minor Very Rare Item
     'Horseshoes of a Zephyr', //Minor Very Rare Item
     'Nolzur\'s Marvelous Pigments', //Minor Very Rare Item
@@ -891,8 +956,13 @@ class LootGenerator
     '+3 Ammunition', //Minor Very Rare Item
     'Arrow of Slaying (*)' //Minor Very Rare Item
   ];
-
-  List<String> legendary = [
+  String pick() {
+    final index = Random().nextInt(minorVeryRare.length);
+    return minorVeryRare[index];
+  }
+}
+class Legendary {
+  final List<String> legendary = [
     '+3 Fate Dealer\'s Deck',
     'Ascendant Dragon Vessel',
     'Ascendant Dragon-Touched Focus',
@@ -980,8 +1050,13 @@ class LootGenerator
     'Dragonlance',
     'Sword of the Planes',
   ];
-
-  List<String> majorLegendary = [
+  String pick() {
+    final index = Random().nextInt(legendary.length);
+    return legendary[index];
+  }
+}
+class MajorLegendary {
+  final List<String> majorLegendary = [
     'Apparatus of Kwalish', //Major Legendary Item
     'Armor of Invulnerability', //Major Legendary Item
     'Belt of Cloud Giant Strength', //Major Legendary Item
@@ -1035,15 +1110,25 @@ class LootGenerator
     'Luck Blade', //Major Legendary Item
     'Vorpal Sword', //Major Legendary Item
   ];
-
-  List<String> minorLegendary = [
+  String pick() {
+    final index = Random().nextInt(majorLegendary.length);
+    return majorLegendary[index];
+  }
+}
+class MinorLegendary {
+  final List<String> minorLegendary = [
     'Potion of Storm Giant Strength', //Minor Legendary Item
     'Sovereign Glue', //Minor Legendary Item
     'Spell Scroll (9th Level)', //Minor Legendary Item
     'Universal Solvent' //Minor Legendary Item
   ];
-
-  List<String> artifacts = [
+  String pick() {
+    final index = Random().nextInt(minorLegendary.length);
+    return minorLegendary[index];
+  }
+}
+class Artifact {
+  final List<String> artifacts = [
     'Adze of Annam',
     'Akmon, Hammer of Purphoros',
     'Axe of the Dwarvish Lords',
@@ -1080,8 +1165,13 @@ class LootGenerator
     'Wand of Orcus',
     'Wyrmskull Throne'
   ];
-
-  List<String> wondrous = [
+  String pick() {
+    final index = Random().nextInt(artifacts.length);
+    return artifacts[index];
+  }
+}
+class Wondrous {
+  final List<String> wondrous = [
     'Coin of Decisionry',
     'Documancy Satchel',
     'Gnomengarde Grenade',
@@ -1096,10 +1186,7 @@ class LootGenerator
     'Silvered Weapon', //Major Wondrous Item
     //Minor Item Starts here
     'Adamantine Ammunition', //Minor Wondrous Item
-    'Silvered Ammunition' //Minor Wondrous Item
-  ];
-
-  List<String> farTravelerItems = [
+    'Silvered Ammunition', //Minor Wondrous Item
     'Arcanaloth\'s Music Box',
     'Bob',
     'Candle Mace',
@@ -1171,80 +1258,63 @@ class LootGenerator
     'Wukka Nut',
     'Hooked Shortspear',
     'Light Repeating Crossbow',
-    'Spiked Armor'
+    'Spiked Armor',
   ];
-
-  String _generateLoot(String loot) {
-    List<String> lootItems;
-    switch(loot) {
-      case 'common':
-      lootItems = common;
-      break;
-    case 'minorCommon':
-      lootItems = minorCommon;
-      break;
-    case 'uncommon':
-      lootItems = uncommon;
-      break;
-    case 'majorUncommon':
-      lootItems = majorUncommon;
-      break;
-    case 'minorUncommon':
-      lootItems = minorUncommon;
-      break;
-    case 'rare':
-      lootItems = rare;
-      break;
-    case 'majorRare':
-      lootItems = majorRare;
-      break;
-    case 'minorRare':
-      lootItems = minorRare;
-      break;
-    case 'veryRare':
-      lootItems = veryRare;
-      break;
-    case 'majorVeryRare':
-      lootItems = majorVeryRare;
-      break;
-    case 'minorVeryRare':
-      lootItems = minorVeryRare;
-      break;
-    case 'legendary':
-      lootItems = legendary;
-      break;
-    case 'majorLegendary':
-      lootItems = majorLegendary;
-      break;
-    case 'minorLegendary':
-      lootItems = minorLegendary;
-      break;
-    case 'artifact':
-      lootItems = artifacts;
-      break;
-    case 'wondrous':
-      lootItems = wondrous;
-      break;
-    case 'farTraveler':
-      lootItems = farTravelerItems;
-      break;
-    default:
-      return 'Invalid Loot Item';
-    }
-    final index = Random().nextInt(lootItems.length);
-    return lootItems[index];
-  }
-  String generateRandomLoot([String? s]) {
-    final treasures = ['common', 'minorCommon', 'uncommon', 'majorUncommon', 'minorUncommon', 
-      'rare', 'majorRare', 'minorRare', 'veryRare', 'majorVeryRare', 'minorVeryRare', 'legendary',
-       'majorLegendary', 'minorLegendary', 'artifact', 'wondrous', 'farTraveler'];
-    final randomLoot = treasures[Random().nextInt(treasures.length)];
-    final lootGenerated = _generateLoot(randomLoot);
-    return lootGenerated;
+  String pick() {
+    final index = Random().nextInt(wondrous.length);
+    return wondrous[index];
   }
 }
+class LootGenerator {
+  final Common _common = Common();
+  final MinorCommon _minorCommon = MinorCommon();
+  final Uncommon _uncommon = Uncommon();
+  final MajorUncommon _majorUncommon = MajorUncommon();
+  final MinorUncommon _minorUncommon = MinorUncommon();
+  final Rare _rare = Rare();
+  final MajorRare _majorRare = MajorRare();
+  final MinorRare _minorRare = MinorRare();
+  final VeryRare _veryRare = VeryRare();
+  final MajorVeryRare _majorVeryRare = MajorVeryRare();
+  final MinorVeryRare _minorVeryRare = MinorVeryRare();
+  final Legendary _legendary = Legendary();
+  final MajorLegendary _majorLegendary = MajorLegendary();
+  final MinorLegendary _minorLegendary = MinorLegendary();
+  final Artifact _artifact = Artifact();
+  final Wondrous _wondrous = Wondrous();
 
+  String generateLoot() {
+    String commonLoot = _common.pick();
+    String minorCommonLoot = _minorCommon.pick();
+    String uncommonLoot = _uncommon.pick();
+    String majorUncommonLoot = _majorUncommon.pick();
+    String minorUncommonLoot = _minorUncommon.pick();
+    String rareLoot = _rare.pick();
+    String majorRareLoot = _majorRare.pick();
+    String minorRareLoot = _minorRare.pick();
+    String veryRareLoot = _veryRare.pick();
+    String majorVeryRareLoot = _majorVeryRare.pick();
+    String minorVeryRareLoot = _minorVeryRare.pick();
+    String legendaryLoot = _legendary.pick();
+    String majorLegendaryLoot = _majorLegendary.pick();
+    String minorLegendaryLoot = _minorLegendary.pick();
+    String artifactLoot = _artifact.pick();
+    String wondrousLoot = _wondrous.pick();
+    String loot = 'Common Item: $commonLoot\n\nMinor Common Item: $minorCommonLoot\n\nUncommon Item: $uncommonLoot\n\n'
+    'Major Uncommon Item: $majorUncommonLoot\n\nMinor Uncommon Item: $minorUncommonLoot\n\nRare Item: $rareLoot\n\n'
+    'Major Rare Item: $majorRareLoot\n\nMinor Rare Item: $minorRareLoot\n\nVery Rare Item: $veryRareLoot\n\n'
+    'Major Very Rare Item: $majorVeryRareLoot\n\nMinor Very Rare Item: $minorVeryRareLoot\n\n'
+    'Legendary Item: $legendaryLoot\n\nMajor Legendary Item: $majorLegendaryLoot\n\nMinor Legendary Item: $minorLegendaryLoot\n\n'
+    'Artifact Item: $artifactLoot\n\nWondrous Item: $wondrousLoot';
+
+    return loot;
+  }
+
+  String generate() {
+    return generateLoot();
+  }
+}
 void main() {
-  final itemLooted = RandomLootGenerator.lootGenerator;
-  print(itemLooted.generateRandomLoot());
+  final randomLoot = LootGenerator().generate();
+  print(randomLoot);
 }
