@@ -1,13 +1,22 @@
 // ignore_for_file: avoid_print
-
 import 'dart:math';
-
-class RandomItemGenerator {
-  static final ItemGenerator itemGenerator = ItemGenerator();
+class RandomShopGenerator {
+  static final ShopGenerator shopGenerator = ShopGenerator();
+  static final Common common = Common();
+  static final CommonPotion commonPotion = CommonPotion();
+  static final Uncommon uncommon = Uncommon();
+  static final UncommonPotion uncommonPotion = UncommonPotion();
+  static final Rare rare = Rare();
+  static final RarePotion rarePotion = RarePotion();
+  static final VeryRare veryRare = VeryRare();
+  static final VRPotion vRPotion = VRPotion();
+  static final Legendary legendary = Legendary();
+  static final LegoPotion legoPotion = LegoPotion();
+  static final Artifact artifact = Artifact();
+  static final Wondrous wondrous = Wondrous();
 }
-
-class ItemGenerator {
-  List<String> common = [
+class Common {
+  final List<String> common = [
     'Bottle of Boundless Coffee',
     'Cartographer\'s Map Case',
     'Chest of Preserving',
@@ -24,9 +33,7 @@ class ItemGenerator {
     'Mind Crystal (Subtle)',
     'Moodmark Paint',
     'Orb of Gonging',
-    'Pipe of Remembrance',
-    'Potion of Comprehension',
-    'Potion of Watchful Rest',
+    'Pipe of Remembrance',    
     'Pressure Capsule',
     'Prosthetic Limb',
     'Scribe\'s Pen',
@@ -87,8 +94,6 @@ class ItemGenerator {
     'Pole of Angling', //Minor Common Item
     'Pole of Collapsing', //Minor Common Item
     'Pot of Awakening', //Minor Common Item
-    'Potion of Climbing', //Minor Common Item
-    'Potion of Healing', //Minor Common Item
     'Rope of Mending', //Minor Common Item
     'Ruby of the War Mage', //Minor Common Item
     'Shield of Expression', //Minor Common Item
@@ -111,8 +116,39 @@ class ItemGenerator {
     'Smoldering Armor', //Minor Common Item
     'Walloping Ammunition' //Minor Common Item
   ];
-
-  List <String> uncommon = [
+  List<String> pick() {
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int  i = 0; i <= 10; i++)
+    {
+      int index = random.nextInt(common.length);
+      pickedItems.add(common[index]);
+    }
+    return pickedItems;
+  }
+}
+class CommonPotion {
+  final List<String> commonPotion = [
+    'Potion of Comprehension',
+    'Potion of Watchful Rest',
+    'Potion of Climbing',
+    'Potion of Healing',
+  ];
+  List<String> pick() {
+    List<String> remainingPotion = List.from(commonPotion);
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int i = 0; i < 4 && remainingPotion.isNotEmpty; i++) {
+      int index = random.nextInt(remainingPotion.length);
+      String pickedPotion = remainingPotion[index];
+      pickedItems.add(pickedPotion);
+      remainingPotion.remove(pickedPotion);
+    }
+    return pickedItems;
+  }
+}
+class Uncommon {
+  final List <String> uncommon = [
     '+1 All-Purpose Tool',
     '+1 Amulet of the Devout',
     '+1 Arcane Grimoire',
@@ -314,14 +350,7 @@ class ItemGenerator {
     'Lantern of Revealing', //Minor Uncommon Item
     'Oil of Slipperiness', //Minor Uncommon Item
     'Periapt of Health', //Minor Uncommon Item
-    'Philter of Love', //Minor Uncommon Item
-    'Potion of Animal Friendship', //Minor Uncommon Item
-    'Potion of Fire Breath', //Minor Uncommon Item
-    'Potion of Greater Healing', //Minor Uncommon Item
-    'Potion of Growth', //Minor Uncommon Item
-    'Potion of Hill Giant Strength', //Minor Uncommon Item
-    'Potion of Poison', //Minor Uncommon Item
-    'Potion of Water Breathing', //Minor Uncommon Item
+    'Philter of Love', //Minor Uncommon Item    
     'Ring of Swimming', //Minor Uncommon Item
     'Robe of Useful Items', //Minor Uncommon Item
     'Rope of Climbing', //Minor Uncommon Item
@@ -334,6 +363,21 @@ class ItemGenerator {
     '+1 Ammunition', //Minor Uncommon Item
     'Mariner\'s Armor', //Minor Uncommon Item
     'Mithral Armor', //Minor Uncommon Item
+    
+  ];
+  List<String> pick() {
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int  i = 0; i <= 8; i++)
+    {
+      int index = random.nextInt(uncommon.length);
+      pickedItems.add(uncommon[index]);
+    }
+    return pickedItems;
+  }
+}
+class UncommonPotion {
+   final List<String> uncPotion = [
     'Potion of Acid Resistance', //Minor Uncommon Item
     'Potion of Cold Resistance', //Minor Uncommon Item
     'Potion of Fire Resistance', //Minor Uncommon Item
@@ -344,9 +388,29 @@ class ItemGenerator {
     'Potion of Psychic Resistance', //Minor Uncommon Item
     'Potion of Radiant Resistance', //Minor Uncommon Item
     'Potion of Thunder Resistance' //Minor Uncommon Item
+    'Potion of Animal Friendship', //Minor Uncommon Item
+    'Potion of Fire Breath', //Minor Uncommon Item
+    'Potion of Greater Healing', //Minor Uncommon Item
+    'Potion of Growth', //Minor Uncommon Item
+    'Potion of Hill Giant Strength', //Minor Uncommon Item
+    'Potion of Poison', //Minor Uncommon Item
+    'Potion of Water Breathing', //Minor Uncommon Item
   ];
-
-  List<String> rare = [
+  List<String> pick() {
+    List<String> remainingPotion = List.from(uncPotion);
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int i = 0; i < 13 && remainingPotion.isNotEmpty; i++) {
+      int index = random.nextInt(remainingPotion.length);
+      String pickedPotion = remainingPotion[index];
+      pickedItems.add(pickedPotion);
+      remainingPotion.remove(pickedPotion);
+    }
+    return pickedItems;
+  }
+}
+class Rare {
+  final List<String> rare = [
     '+1 Fate Dealer\'s Deck',
     '+2 All-Purpose Tool',
     '+2 Amulet of the Devout',
@@ -439,9 +503,6 @@ class ItemGenerator {
     'Piercer',
     'Piwafwi of Fire Resistance',
     'Planecaller\'s Codex',
-    'Potion of Aqueous Form',
-    'Potion of Mind Control (beast)',
-    'Potion of Mind Control (humanoid)',
     'Prehistoric Figurine of Wondrous Power, Kyanite Pteranodon',
     'Professor Orb',
     'Professor Skant',
@@ -629,17 +690,7 @@ class ItemGenerator {
     'Horseshoes of Speed', //Minor Rare Item
     'Necklace of Fireballs', //Minor Rare Item
     'Oil of Etherealness', //Minor Rare Item
-    'Portable Hole', //Minor Rare Item
-    'Potion of Clairvoyance', //Minor Rare Item
-    'Potion of Diminution', //Minor Rare Item
-    'Potion of Fire Giant Strength', //Minor Rare Item
-    'Potion of Frost Giant Strength', //Minor Rare Item
-    'Potion of Gaseous Form', //Minor Rare Item
-    'Potion of Heroism', //Minor Rare Item
-    'Potion of Invulnerability', //Minor Rare Item
-    'Potion of Mind Reading', //Minor Rare Item
-    'Potion of Stone Giant Strength', //Minor Rare Item
-    'Potion of Superior Healing', //Minor Rare Item
+    'Portable Hole', //Minor Rare Item    
     'Quaal\'s Feather Token, Anchor', //Minor Rare Item
     'Quaal\'s Feather Token, Bird', //Minor Rare Item
     'Quaal\'s Feather Token, Fan', //Minor Rare Item
@@ -658,8 +709,48 @@ class ItemGenerator {
     'Spell Scroll (5th Level)', //Minor Rare Item
     '+2 Ammunition' //Minor Rare Item
   ];
-
-  List<String> veryRare = [
+  List<String> pick() {
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int  i = 0; i <= 6; i++)
+    {
+      int index = random.nextInt(rare.length);
+      pickedItems.add(rare[index]);
+    }
+    return pickedItems;
+  }
+}
+class RarePotion {
+  final List<String> rarePotion = [
+    'Potion of Clairvoyance', //Minor Rare Item
+    'Potion of Diminution', //Minor Rare Item
+    'Potion of Fire Giant Strength', //Minor Rare Item
+    'Potion of Frost Giant Strength', //Minor Rare Item
+    'Potion of Gaseous Form', //Minor Rare Item
+    'Potion of Heroism', //Minor Rare Item
+    'Potion of Invulnerability', //Minor Rare Item
+    'Potion of Mind Reading', //Minor Rare Item
+    'Potion of Stone Giant Strength', //Minor Rare Item
+    'Potion of Superior Healing', //Minor Rare Item
+    'Potion of Aqueous Form',
+    'Potion of Mind Control (beast)',
+    'Potion of Mind Control (humanoid)',
+  ];
+  List<String> pick() {
+    List<String> remainingPotion = List.from(rarePotion);
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int i = 0; i < 7 && remainingPotion.isNotEmpty; i++) {
+      int index = random.nextInt(remainingPotion.length);
+      String pickedPotion = remainingPotion[index];
+      pickedItems.add(pickedPotion);
+      remainingPotion.remove(pickedPotion);
+    }
+    return pickedItems;
+  }
+}
+class VeryRare {
+  final List<String> veryRare = [
     '+2 Fate Dealer\'s Deck',
     '+3 All-Purpose Tool',
     '+3 Amulet of the Devout',
@@ -725,8 +816,7 @@ class ItemGenerator {
     'Nimbus Coronet',
     'Ornithopter of Flying',
     'Pennant of the Vind Rune',
-    'Peregrine Mask',
-    'Potion of Mind Control (monster)',
+    'Peregrine Mask',    
     'Prehistoric Figurine of Wondrous Power, Carnelian Triceratops',
     'Ring of Amity',
     'Rod of Hellish Flames',
@@ -862,7 +952,26 @@ class ItemGenerator {
     'Bag of Devouring', //Minor Very Rare Item
     'Horseshoes of a Zephyr', //Minor Very Rare Item
     'Nolzur\'s Marvelous Pigments', //Minor Very Rare Item
-    'Oil of Sharpness', //Minor Very Rare Item
+    'Oil of Sharpness', //Minor Very Rare Item    
+    'Spell Scroll (6th Level)', //Minor Very Rare Item
+    'Spell Scroll (7th Level)', //Minor Very Rare Item
+    'Spell Scroll (8th Level)', //Minor Very Rare Item
+    '+3 Ammunition', //Minor Very Rare Item
+    'Arrow of Slaying (*)' //Minor Very Rare Item
+  ];
+  List<String> pick() {
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int  i = 0; i <= 4; i++)
+    {
+      int index = random.nextInt(veryRare.length);
+      pickedItems.add(veryRare[index]);
+    }
+    return pickedItems;
+  }
+}
+class VRPotion {
+  final List<String> vRPotion = [
     'Potion of Cloud Giant Strength', //Minor Very Rare Item
     'Potion of Flying', //Minor Very Rare Item
     'Potion of Invisibility', //Minor Very Rare Item
@@ -870,14 +979,23 @@ class ItemGenerator {
     'Potion of Speed', //Minor Very Rare Item
     'Potion of Supreme Healing', //Minor Very Rare Item
     'Potion of Vitality', //Minor Very Rare Item
-    'Spell Scroll (6th Level)', //Minor Very Rare Item
-    'Spell Scroll (7th Level)', //Minor Very Rare Item
-    'Spell Scroll (8th Level)', //Minor Very Rare Item
-    '+3 Ammunition', //Minor Very Rare Item
-    'Arrow of Slaying (*)' //Minor Very Rare Item
+    'Potion of Mind Control (monster)',
   ];
-
-  List<String> legendary = [
+  List<String> pick() {
+    List<String> remainingPotion = List.from(vRPotion);
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int i = 0; i < 8 && remainingPotion.isNotEmpty; i++) {
+      int index = random.nextInt(remainingPotion.length);
+      String pickedPotion = remainingPotion[index];
+      pickedItems.add(pickedPotion);
+      remainingPotion.remove(pickedPotion);
+    }
+    return pickedItems;
+  }
+}
+class Legendary {
+  final List<String> legendary = [
     '+3 Fate Dealer\'s Deck',
     'Ascendant Dragon Vessel',
     'Ascendant Dragon-Touched Focus',
@@ -918,19 +1036,17 @@ class ItemGenerator {
     'Lost Crown of Besilmer',
     'Matalotok',
     'Moonblade',
-    "Murgaxor's Orb",
+    'Murgaxor\'s Orb',
     'Nepenthe',
     'Nether Scroll of Azumar',
     'Obsidian Flint Dragon Plate',
     'Orb of Skoraeus',
     'Orcsplitter',
-    'Platinum Scarf',
-    "Potion of Dragon's Majesty",
-    'Potion of Giant Size',
+    'Platinum Scarf',    
     'Prehistoric Figurine of Wondrous Power, Jasper Tyrannosaurus Rex',
     'Pyxis of Pandemonium',
     'Rakdos Riteknife',
-    "Reaper's Scream",
+    'Reaper\'s Scream',
     'Red Dragon Mask',
     'Ruby Weave Gem',
     'Scroll of Tarrasque Summoning',
@@ -947,7 +1063,7 @@ class ItemGenerator {
     'Spell Gem (Ruby)',
     'Spell Gem (Star ruby)',
     'Spindle of Fate',
-    "Stonebreaker's Breastplate",
+    'Stonebreaker\'s Breastplate',
     'Sunsword',
     'Talarith',
     'Telescopic Transporter',
@@ -961,7 +1077,7 @@ class ItemGenerator {
     'Witchlight Vane',
     'Witchlight Watch',
     'Ythryn Mythallar',
-    "Ascendant Dragon's Wrath Weapon",
+    'Ascendant Dragon\'s Wrath Weapon',
     'Dragonlance',
     'Sword of the Planes',
     //Major Legendary Items Start Here
@@ -1017,14 +1133,43 @@ class ItemGenerator {
     'Holy Avenger', //Major Legendary Item
     'Luck Blade', //Major Legendary Item
     'Vorpal Sword', //Major Legendary Item
-    //Minor Legendary Items Start Here
-    'Potion of Storm Giant Strength', //Minor Legendary Item
+    //Minor Legendary Items Start Here    
     'Sovereign Glue', //Minor Legendary Item
     'Spell Scroll (9th Level)', //Minor Legendary Item
     'Universal Solvent' //Minor Legendary Item
   ];
-
-  List<String> artifacts = [
+  List<String> pick() {
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int  i = 0; i <= 2; i++)
+    {
+      int index = random.nextInt(legendary.length);
+      pickedItems.add(legendary[index]);
+    }
+    return pickedItems;
+  }
+}
+class LegoPotion {
+  final List<String> legoPotion = [
+    'Potion of Storm Giant Strength', //Minor Legendary Item
+    "Potion of Dragon's Majesty",
+    'Potion of Giant Size',
+  ];
+  List<String> pick() {
+    List<String> remainingPotion = List.from(legoPotion);
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int i = 0; i < 2 && remainingPotion.isNotEmpty; i++) {
+      int index = random.nextInt(remainingPotion.length);
+      String pickedPotion = remainingPotion[index];
+      pickedItems.add(pickedPotion);
+      remainingPotion.remove(pickedPotion);
+    }
+    return pickedItems;
+  }
+}
+class Artifact {
+  final List<String> artifact = [
     'Adze of Annam',
     'Akmon, Hammer of Purphoros',
     'Axe of the Dwarvish Lords',
@@ -1061,8 +1206,19 @@ class ItemGenerator {
     'Wand of Orcus',
     'Wyrmskull Throne'
   ];
-
-  List<String> wondrous = [
+  List<String> pick() {
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int  i = 0; i <= 1; i++)
+    {
+      int index = random.nextInt(artifact.length);
+      pickedItems.add(artifact[index]);
+    }
+    return pickedItems;
+  }  
+}
+class Wondrous {
+  final List<String> wondrous = [
     'Coin of Decisionry',
     'Documancy Satchel',
     'Gnomengarde Grenade',
@@ -1077,10 +1233,7 @@ class ItemGenerator {
     'Silvered Weapon', //Major Wondrous Item
     //Minor Item Starts here
     'Adamantine Ammunition', //Minor Wondrous Item
-    'Silvered Ammunition' //Minor Wondrous Item
-  ];
-
-  List<String> farTravelerItems = [
+    'Silvered Ammunition', //Minor Wondrous Item
     'Arcanaloth\'s Music Box',
     'Bob',
     'Candle Mace',
@@ -1154,52 +1307,59 @@ class ItemGenerator {
     'Light Repeating Crossbow',
     'Spiked Armor'
   ];
-
-  String _generateItem(String rarity) {
-    List<String> itemList;
-    switch (rarity) {
-      case 'uncommon':
-        itemList = uncommon;
-        break;
-      case 'common':
-        itemList = common;
-        break;
-      case 'rare':
-        itemList = rare;
-        break;
-      case 'veryRare':
-        itemList = veryRare;
-        break;
-      case 'legendary':
-        itemList = legendary;
-        break;
-      case 'artifact':
-        itemList = artifacts;
-        break;
-      case 'wondrous':
-        itemList = wondrous;
-        break;
-      case 'farTraveler':
-        itemList = farTravelerItems;
-      default:
-        return 'Invalid rarity';
+  List<String> pick() {
+    List<String> pickedItems = [];
+    Random random = Random();
+    for (int  i = 0; i <= 5; i++)
+    {
+      int index = random.nextInt(wondrous.length);
+      pickedItems.add(wondrous[index]);
     }
-
-    final index = Random().nextInt(itemList.length);
-    return itemList[index];
-  }
-   String generateRandomItem([String? s]) {
-    final rarities = ['common', 'uncommon', 'rare', 'veryRare', 'legendary',
-      'artifact', 'wondrous', 'farTraveler'];
-    final randomRarity = rarities[Random().nextInt(rarities.length)];
-    final randomItem = _generateItem(randomRarity);
-
-    return randomItem;
+    return pickedItems;
   }
 }
-
+class ShopGenerator {
+  final Common _common = Common();
+  final CommonPotion _cPotion = CommonPotion();
+  final Uncommon _uncommon = Uncommon();
+  final UncommonPotion _uncPotion = UncommonPotion();
+  final Rare _rare = Rare();
+  final RarePotion _rarePotion = RarePotion();
+  final VeryRare _veryRare = VeryRare();
+  final VRPotion _vrPotion = VRPotion();
+  final Legendary _legendary = Legendary();
+  final LegoPotion _legoPotion = LegoPotion();
+  final Artifact _artifact = Artifact();
+  final Wondrous _wondrous = Wondrous();
+  String generateShop() {
+    List<String> commonItem = _common.pick();
+    List<String> cPotionItem = _cPotion.pick();
+    List<String> uncommonItem = _uncommon.pick();
+    List<String> uncPotionItem = _uncPotion.pick();
+    List<String> rareItem = _rare.pick();
+    List<String> rPotionItem = _rarePotion.pick();
+    List<String> veryRareItem = _veryRare.pick();
+    List<String> vRPotionItem = _vrPotion.pick();
+    List<String> legendaryItem = _legendary.pick();
+    List<String> legPotionItem = _legoPotion.pick();
+    List<String> artifactItem = _artifact.pick();
+    List<String> wondrousItem = _wondrous.pick(); 
+    String shopInv = 
+      "----Common items----\n${commonItem.join('\n' )}\n${cPotionItem.join(' X 10\n')}\n"
+      "\n----Uncommon items----\n${uncommonItem.join('\n' )}\n${uncPotionItem.join(' X 7\n')}\n"
+      "\n----Rare items----\n${rareItem.join('\n' )}\n${rPotionItem.join(' X 4\n')}\n"
+      "\n----Very Rare items----\n${veryRareItem.join('\n' )}\n${vRPotionItem.join(' X 3\n')}\n"
+      "\n----Legendary items----\n${legendaryItem.join('\n' )}\n${legPotionItem.join(' X 1\n')}\n"
+      "\n----Artifact items----\n${artifactItem.join('\n' )}\n"
+      "\n----Wondrous items----\n${wondrousItem.join('\n' )}";
+    return shopInv;
+  }
+  String generate() {
+    return generateShop();
+  }
+}
 void main() {
-  final itemGenerator = RandomItemGenerator.itemGenerator;
-  print(itemGenerator.generateRandomItem());
+  final shop = ShopGenerator().generate();
+  print(shop);
 }
  

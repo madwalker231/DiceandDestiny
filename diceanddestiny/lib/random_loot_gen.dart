@@ -1282,7 +1282,6 @@ class LootGenerator {
   final MinorLegendary _minorLegendary = MinorLegendary();
   final Artifact _artifact = Artifact();
   final Wondrous _wondrous = Wondrous();
-
   String generateLoot() {
     String commonLoot = _common.pick();
     String minorCommonLoot = _minorCommon.pick();

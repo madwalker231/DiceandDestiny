@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faker/faker.dart';
 import 'firebase_options.dart';
-import 'random_item_gen.dart';
+import 'random_shop_gen.dart';
 import 'random_quest_gen.dart';
 import 'random_encounter.dart';
 import 'random_npc_gen.dart';
@@ -226,22 +226,13 @@ class MenuScreen extends StatelessWidget {
   }
 
   // Create an instance of RandomItemGenerator
-  final RandomItemGenerator randomItemGenerator = RandomItemGenerator();
+  final ShopGenerator randomShopGenerator = ShopGenerator();
 
   // Function to generate a random item
-  Map<String, String> _generateRandomItem() {
-    final itemGenerator = RandomItemGenerator.itemGenerator;
-    final Map<String, String> items = {
-      'common': itemGenerator.generateRandomItem('common'),
-      'uncommon': itemGenerator.generateRandomItem('uncommon'),
-      'rare': itemGenerator.generateRandomItem('rare'),
-      'veryRare': itemGenerator.generateRandomItem('veryRare'),
-      'legendary': itemGenerator.generateRandomItem('legendary'),
-      'artifact': itemGenerator.generateRandomItem('artifact'),
-      'wondrous': itemGenerator.generateRandomItem('wondrous'),
-      'farTravler': itemGenerator.generateRandomItem('farTraveler'),
-    };
-    return items;
+  String _generateRandomShop()
+  {
+    final randomShop = randomShopGenerator.generate();
+    return randomShop;
   }
 
   final NPCGenerator npcGenerator = NPCGenerator();
@@ -358,7 +349,7 @@ class MenuScreen extends StatelessWidget {
               (
                 onPressed: () 
                 {
-                  final randomItemMap = _generateRandomItem();
+                  final randomShop = _generateRandomShop();
                   showDialog
                   (
                     context: context,
@@ -366,18 +357,19 @@ class MenuScreen extends StatelessWidget {
                     {
                       return AlertDialog
                       (
-                        title: const Text('Generated Items'),
-                        content: Column
+                        title: const Text('Generate Shop'),
+                        content: SingleChildScrollView
                         (
-                          children: randomItemMap.entries
-                              .map((entry) => Text('${entry.key}: ${entry.value}'))
-                              .toList(),
+                          child: Text(randomShop),
                         ),
                         actions: <Widget>
                         [
                           TextButton
                           (
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () 
+                            {
+                              Navigator.pop(context);
+                            },
                             child: const Text('OK'),
                           ),
                         ],
@@ -385,7 +377,7 @@ class MenuScreen extends StatelessWidget {
                     },
                   );
                 },
-                child: const Text('Generate Random Items'),
+                child: const Text('Generate Random Shop'),
               ),
               const SizedBox(height: 20),
               ElevatedButton
